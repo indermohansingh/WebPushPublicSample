@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Hello World</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <script>
+
+        function doMyDecrypt(strInput){
+            console.log("Input: " + strInput);
+            //part 1, decode
+            var utf8StrDecoded = decodeURIComponent(strInput);
+            console.log("utf8StrDecoded: " + utf8StrDecoded);
+
+            //part 2, decrypt
+            var data = [];
+            var val1, val2, val3 ;
+            for (var i = 0; i < utf8StrDecoded.length; i++){  
+                val3 = utf8StrDecoded.charCodeAt(i);
+                val1 = Math.trunc(val3/ 100) ;
+                val2 = val3 % 100 ;
+                if (val1 < 30) {val1 +=98} else val1--;
+                if (val2 < 30) {val2 +=98} else val2--;
+                console.log( i + " : " + 
+                    val1 + " : " + 
+                    val2  + " : " +  
+                    val3 + " : " + 
+                    String.fromCharCode(val1) + " : " + 
+                    String.fromCharCode(val2) 
+                );
+                data.push(String.fromCharCode(val1) );
+                if ( (i != utf8StrDecoded.length-1) || (val2 !=127)) data.push(String.fromCharCode(val2) );
+            }
+            console.log("Data: " + data);
+            var normalStr = data.join("");
+            console.log("normalStr: " + normalStr);
+            return normalStr;
+        }
+
+    </script>
+    This is a sample page for using Adobe Campaign for Web Push!
+    <br>
+    Make sure you allow push notifications on this page. 
+    <br>
+    Then click on the link below. This step is needed since its a test page and not a whitelisted website.
+    <br>
+    Finally wait for some time and you will get a push from Adobe Campaign based on the campaign setup. You don't have to remain on this page.  
+
+    <br>
+    <br>
+    <a href="javascript:regToken();">Click here</a>
+</body>
+</html>
